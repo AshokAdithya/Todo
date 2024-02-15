@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ToDoList</title>
+        <link rel="stylesheet" href="./styles/style.css"/>
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <div class="today">
+                <h1 class="name">To Do List</h1>
+            </div>
+            <div class="list">
+                <% if(works.length===0){%>
+                    <h2 class="none">Add Tasks To Work on</h2>
+                <%} else {%>
+                    <% works.forEach(work => {%>
+                        <div class="item">
+                            <form action="/delete" method="post">
+                                <input class="tick" type="checkbox" onchange="this.form.submit()" name="deleteItemId" value="<%= work.id %>">
+                            </form>
+
+                            <p id="title<%=work.id%>">
+                                <%= work.list %>
+                            </p>
+
+                            <form action="/edit" method="post">
+                                <input type="hidden" name="updateItemId" value="<%=work.id %>">
+                                <input type="text" id="input<%=work.id%>" name="updateItemlist" value="<%=work.list%>" autocomplete="off" hidden>
+                                <button id="done<%=work.id%>" class="edit" type="submit" hidden><i class='bx bx-check'></i></button>
+                            </form>
+                            <button id="edit<%=work.id%>" class="edit" onclick="handler('<%=work.id%>')"><i class='bx bxs-edit icon'></i></button>
+                        </div>
+                    <%});%>
+                <%}%>
+            </div>
+            <div class="adding">
+                <form  action="/add" method="post">
+                    <input type="text" name="newItem" placeholder="Type New" autocomplete="off" autofocus="true" />
+                    <button class="add" type="submit"  >+</button>
+                  </form>
+            </div>
+        </div>
+        <script>
+            function handler(id){
+                document.getElementById("title" + id).setAttribute("hidden", true);
+                document.getElementById("edit" + id).setAttribute("hidden", true);
+                const input =document.getElementById("input" + id);
+                input.removeAttribute("hidden");
+                input.selectionStart=input.selectionEnd=input.value.length;
+                input.focus();
+                document.getElementById("done" + id).removeAttribute("hidden");
+            }
+        </script>
+    </body>
+</html>
