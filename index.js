@@ -18,6 +18,8 @@ app.use(express.static("public"));
 
 db.connect();
 
+db.query("CREATE TABLE IF NOT EXISTS todo ( id SERIAL PRIMARY KEY NOT NULL, list VARCHAR(255) NOT NULL );");
+
 app.get('/',async (req,res)=>{
         const response=await db.query("SELECT * FROM todo ORDER BY id ASC;");
         const list=response.rows;
