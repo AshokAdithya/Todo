@@ -144,8 +144,15 @@ button.add:hover{
         padding: 2px 20px;
     }
     button.add{
+        top: 12px;
         width: 30px;
         height: 30px;
+    }
+    
+    button.add:hover{
+        background-color: #1fb4ff;
+        width: 42px;
+        height: 42px;
     }
     input[type="text"]{
         width: 70%;
